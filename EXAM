@@ -1208,6 +1208,53 @@ int main() {
 
     return 0;
 }
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DFS:-
+#include <stdio.h>
+
+#define MAX 100
+
+int adj[MAX][MAX];     // Adjacency matrix
+int visited[MAX];      // Visited array
+
+void dfs(int vertex, int n) {
+    int i;
+
+    visited[vertex] = 1;
+    printf("%d ", vertex);
+
+    for (i = 0; i < n; i++) {
+        if (adj[vertex][i] == 1 && !visited[i]) {
+            dfs(i, n);
+        }
+    }
+}
+
+int main() {
+    int n, e;
+    int i, u, v, start;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &e);
+
+    printf("Enter edges (format: u v for an edge between u and v):\n");
+    for (i = 0; i < e; i++) {
+        scanf("%d %d", &u, &v);
+        adj[u][v] = 1;
+        adj[v][u] = 1;  // For undirected graph
+    }
+
+    printf("Enter starting vertex for DFS: ");
+    scanf("%d", &start);
+
+    printf("DFS traversal: ");
+    dfs(start, n);
+
+    return 0;
+}
 
 
 
