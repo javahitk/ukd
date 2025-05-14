@@ -1256,6 +1256,72 @@ int main() {
     return 0;
 }
 
+Kruskal's 
+#include <stdio.h>
+int parent[100];
+int find(int x)
+{
+    if(parent[x]==x)
+    return x;
+    return parent[x]=find(parent[x]);
+}
+void uni(int u,int v)
+{
+    parent[find(u)]=find(v);
+}
+int main()
+{
+    int edges[100][3];
+    printf("Enter no of vertices and edges : ");
+    int v,e;
+    scanf("%d%d",&v,&e);
+
+    printf("Enter edges : ");
+    for(int i=0;i<e;i++)
+    scanf("%d%d%d",&edges[i][0],&edges[i][1],&edges[i][2]);
+
+    for(int i=1;i<=v;i++)
+    parent[i]=i;
+
+    for(int  j=e-2;j>=0;j--)
+    {
+        for(int i=0;i<=j;i++)
+        {
+            if(edges[j][2]>edges[j+1][2])
+            {
+                int t=edges[j][0];
+                edges[j][0]=edges[j+1][0];
+                edges[j+1][0]=t;
+
+                t=edges[j][1];
+                edges[j][1]=edges[j+1][1];
+                edges[j+1][1]=t;
+
+                t=edges[j][2];
+                edges[j][2]=edges[j+1][2];
+                edges[j+1][2]=t;
+            }
+        }
+    }
+
+    int total=0,count=0;
+    for(int i=0;i<e&&count<v-1;i++)
+    {
+        int u=edges[i][0];
+        int v=edges[i][1];
+        int wt=edges[i][2];
+
+        if(find(u)!=find(v))
+        {
+            printf("%d - %d : %d\n",u,v,wt);
+            total+=wt;
+            count++;
+            uni(u,v);
+        }
+    }
+    printf("Min cost = %d\n",total);
+    return 0;
+}
 
 
 
